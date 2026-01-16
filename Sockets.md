@@ -127,3 +127,6 @@
 #### Communication:
 *   Https: Unidirectional (client request -> server responds).
 *   WebSockets: Bidirectional (client -> server) (server-client).
+### Events:
+*   Https: the main “event” is the incoming request (a request must be done).
+*   WebSockets: Fully event-driven, server can react to any event at any time 
