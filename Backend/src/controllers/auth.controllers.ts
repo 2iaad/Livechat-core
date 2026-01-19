@@ -36,7 +36,7 @@ export async function signup(req: Request, res: Response) {
             password: hashedPassword
         })
 
-        // save newUser inside the DB with its jwToken
+        // save newUser inside the DB
         await newUser.save()
 
         // generate JWT token

@@ -1,18 +1,27 @@
-# Interactive MERN Application (back-end + front-end) (Socket.IO + JWT Auth)
+# MERN Application
 
-A full-stack real-time chat application built with the MERN stack,
-featuring secure authentication using JWT and live messaging powered
-by Socket.IO.
+A full‑stack MERN project that lets people exchange messages, images, and presence updates in real time.
+* The backend exposes a REST API with JWT-based auth and image uploads
+* The frontend provides a responsive, Tailwind‑styled interface built using the Zustand global state library.
 
----
+## Stack
 
-### JavaScript objects are always allocated on the heap.
+- **Frontend:** React, TypeScript, Vite, Tailwind CSS, DaisyUI, Zustand, React Router
+- **Backend:** Node.js, Express, MongoDB (Mongoose), JWT, Cloudinary, Socket.IO
+- **Tooling:** ESLint, TypeScript, Vite dev server
 
-    - in JavaScript, memory management is automatic, leaks are already handled.
-    - JS uses Garbage collection -> we need heap allocation.
-    - leaks can still exist tho.
+## Run Locally
 
-### Error i encountered: (Coss-origin)
+```bash
+# Backend
+cd Backend
+npm install
+npm run dev
 
-This error happens because your Frontend (running on port 5173) and your Backend (running on port 5001) are on different "origins" (domains/ports). Browsers block these requests by default for security unless the backend explicitly allows them.
-Fix: used the `cors` package in the back-end.
+# Frontend (in another terminal)
+cd Frontend
+npm install
+npm run dev
+```
+
+The frontend expects the API at `http://localhost:5001/api` and connects to the realtime server on `http://localhost:5001`.

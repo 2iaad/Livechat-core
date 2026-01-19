@@ -29,10 +29,17 @@ app.use(cookieParser()); // apply middleware to every request to parse the Cooki
 app.use(express.json({ limit: "10mb" })); // apply middleware to every request before reaching routes
 app.use(express.urlencoded({ extended: true, limit: "10mb" }));
 
-// This means: forward any request that starts with /api/auth to authRoutes -> The router
+/**
+ * This means: forward any request that starts with /api/auth to authRoutes -> The router
+ * Mounting Routes to URL paths
+ */
 app.use("/api/messages", messagesRoutes);
 app.use("/api/auth", authRoutes)
 
+/**
+ * Open a TCP socket on port PORT and start accepting incoming connections
+ * connect to mongodb
+ */
 server.listen(PORT, () => {
     console.log('\n' + `Server is running on port: ${PORT}`)
     connectDB()

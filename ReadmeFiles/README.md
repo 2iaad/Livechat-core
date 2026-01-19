@@ -1,4 +1,67 @@
-## Signup & login pages
+# Steps i went through to create a Mern-stack-app from scratch:
+
+## Setting up the backend-server
+
+1. ### Creating the server
+
+    1. creating the http/tcp server using **createServer()** function from the http library on top of the request handler we named *app*.
+    2. integrate the sockets using the Server() class and creating an object to handle the events.
+    3. calling the middlewares && mounting the URL paths to the [Routes](./Steps.md:12:Routes) we have created:
+    - `app.use("/api/messages", messagesRoutes);`
+    - `app.use("/api/auth", authRoutes)`
+    4. putting the server on the listening mode to start accepting request + connecting it to the **mongoDB**.
+
+2. ### Creating Routes with the Router + middleware
+
+    created using the **express.router()**, here exists the **router** that matches the **Endpoint** with **the middleware and the controller**(that handles Req/Res logic).
+
+    ####  Routes Created
+
+    `router.post("/signup", signup)`
+
+    `router.post("/login", login)`
+
+    `router.post("/logout", logout)`
+
+    `router.put("/edit-profile", protectRoute, editProfile)`
+
+    `router.get("/check", protectRoute, checkAuth)`
+
+    #### Routes middleware
+
+    **protectRoute()**: its a function that is run before the controller(that contains the main behaviour).
+its use is to check if the client (is logged in) and (is a valide user) using the JWT.
+    1. get the jwt from the request *cookies* header.
+    2. decode it using the SECRET + jwt.verify() to get the userId from decodedJwt.userId.
+    3. check if the user exists on the dataBase using the User model.
+
+3. ### Creating Controllers
+
+    #### 1. signup
+    in this controller i do the following:
+    1. parse the input from the req.body.
+    2. return if the user already exists withing the database using the EMAIL.
+    3. hash the password using **bcrypt()**.
+    4. create user on the data base using the User model.
+    5. generate the JWT token using **generateJWT()** and put it in the request header.
+
+    #### 2. login
+    in this controller i do the following:
+    1. check if the user already exists in the data base.
+    2. if it exists i get its data from the database.
+    3. check if the password is correct using the **bcrypt.compare()**
+    4. generate jwt for the user.
+
+    #### 3. logout
+    Delete the jwt from the request headers `res.cookie("jwt", "", { maxAge: 0 })`
+
+    #### 4. edit-profile
+    in this controller i do the following:
+    1. get the profile picture from the req.body
+    2. upload it to cloudinary `await cloudinary.uploader.upload(profilePicture);`
+    3. update the database document of the user with the new photoo.
+
+## Setting up the front-end side
 
 1. ### Initing vite & tailwind
 
