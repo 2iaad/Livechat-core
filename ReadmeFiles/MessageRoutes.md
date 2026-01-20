@@ -12,17 +12,17 @@
 ### Backend
 
 1. Browser calls `GET /api/messages/users`.
-2. Express matches `router.get("/users", getUsersForSideBar)` in [`messages.route.router`](Backend/src/routes/messages.route.ts).
+2. Express matches `router.get("/users", getUsersForSideBar)` in [`messages.route.router`](../Backend/src/routes/messages.route.ts).
 3. [`auth.middleware.protectRoute`](Backend/src/middleware/auth.middleware.ts) runs, attaches `req.user`.
-4. [`message.controllers.getUsersForSideBar`](Backend/src/controllers/message.controllers.ts) queries all users except the logged-in one and returns JSON.
+4. [`message.controllers.getUsersForSideBar`](../Backend/src/controllers/message.controllers.ts) queries all users except the logged-in one and returns JSON.
 
 ### Frontend
 
 1. [`Sidebar`](Frontend/src/components/HomePage-Sidebar.tsx) mounts.
-2. `useEffect` in [`Sidebar`](Frontend/src/components/HomePage-Sidebar.tsx) calls [`useChatStore.getUsers`](Frontend/src/store/useChatStore.ts).
-3. [`useChatStore.getUsers`](Frontend/src/store/useChatStore.ts) does  
-   `axiosInstance.get<User[]>("/messages/users")` via [`axios.axiosInstance`](Frontend/src/lib/axios.ts).
-4. On success it updates `users` in the store, causing [`Sidebar`](Frontend/src/components/HomePage-Sidebar.tsx) to re-render with the contact list.
+2. `useEffect` in [`Sidebar`](Frontend/src/components/HomePage-Sidebar.tsx) calls [`useChatStore.getUsers`](../Frontend/src/store/useChatStore.ts).
+3. [`useChatStore.getUsers`](../Frontend/src/store/useChatStore.ts) does  
+   `axiosInstance.get<User[]>("/messages/users")` via [`axios.axiosInstance`](../Frontend/src/lib/axios.ts).
+4. On success it updates `users` in the store, causing [`Sidebar`](../Frontend/src/components/HomePage-Sidebar.tsx) to re-render with the contact list.
 
 ---
 
