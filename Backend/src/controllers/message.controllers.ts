@@ -19,7 +19,7 @@ export const getUsersForSideBar: RequestHandler = async (req, res) => {
         res.status(200).json(filteredUsers)
     } catch (error) {
 
-        console.log("Error: in getUsersForSideBar controller: ", error.message)
+        console.log("Error: in getUsersForSideBar controller: ", (error as Error).message)
         return res.status(500).json("Internal Server Error");
     }
 }
@@ -40,7 +40,7 @@ export const getMessages: RequestHandler = async (req, res) => {
         res.status(200).json(messages)
     } catch (error) {
 
-        console.log("Error in getMessages controller: ", error.message);
+        console.log("Error in getMessages controller: ", (error as Error).message);
         res.status(500).json({ error: "Internal Server Error" });
     }
 }
@@ -72,7 +72,7 @@ export const sendMessage: RequestHandler = async (req, res) => {
         // TODO: realtime functionality goes here using socket.io
         res.status(201).json(newMessage)
     } catch (error) {
-        console.log("Error in sendMessage controller: ", error.message)
+        console.log("Error in sendMessage controller: ", (error as Error).message)
         res.status(500).json({error: "Internal Server Error"})
     }
 }

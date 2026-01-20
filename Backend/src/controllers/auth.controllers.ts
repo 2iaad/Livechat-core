@@ -49,7 +49,7 @@ export async function signup(req: Request, res: Response) {
         })
     }
     catch (error) {
-        console.log(`Error in signUp function controller`, error.message)
+        console.log(`Error in signUp function controller`, (error as Error).message)
         res.status(500).json({ message: "Internal server error!" })
     }
 }
@@ -76,7 +76,7 @@ export const login = async (req: Request, res: Response) => {
         })
     }
     catch (error) {
-        console.log(`Error in login function controller`, error.message)
+        console.log(`Error in login function controller`, (error as Error).message)
         res.status(500).json({ message: "Internal server error!" })
     }
 }
@@ -87,7 +87,7 @@ export const logout = (req: Request, res: Response) => {
         res.status(200).json({ message: "User logged out!" })
     }
     catch (error) {
-        console.log(`Error in logout function controller`, error.message)
+        console.log(`Error in logout function controller`, (error as Error).message)
         res.status(500).json({ message: "Internal server error!" })
     }
 }
@@ -111,7 +111,7 @@ export const editProfile: RequestHandler = async (req, res) => {
         res.status(200).json(updatedUser)
     }
     catch (error) {
-        console.log("Error in editProfile controller (auth.controllers.ts)", error.message);
+        console.log("Error in editProfile controller (auth.controllers.ts)", (error as Error).message);
         return res.status(500).json({message: "Internal server error"})
     }
 }
@@ -122,7 +122,7 @@ export const checkAuth: RequestHandler = (req, res) => {
         return res.status(200).json((req as any).user);
     }
     catch (error) {
-        console.log("Error in checkAuth controller (auth.controllers.ts: )", error.message);
+        console.log("Error in checkAuth controller (auth.controllers.ts: )", (error as Error).message);
         return res.status(500).json({message: "Internal server error"})
     }
 }
