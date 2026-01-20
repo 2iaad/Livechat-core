@@ -28,8 +28,6 @@
 ```
 ---
 
-## Login and signup Pages(front-end)
-
 ### Packages Needed
 
 #### `react-router-dom`:

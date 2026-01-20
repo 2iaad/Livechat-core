@@ -119,16 +119,3 @@ Allows the authenticated user to update their profile picture.
 Socket.IO is a javascript library that allows two-way communication between your Node.js server and your web client
 
 Socket.IO does not create its own HTTP server, it attaches itself to an existing Node HTTP server.
-
-## Steps Overview
-
-### 1. creating http server
-
-`const app = express()`: returns a function that handles routing logic for the HTTP requests.
-`app.listen(PORT)` will create a server internally that we dont have access to.
-
-> That’s a problem for sockets: WebSockets require access to the HTTP server instance inorder to attach WebSocket listeners.
-
-thats why we switch to using the `const server = createServer(app)` to create an http server.
-
-### 2. 
