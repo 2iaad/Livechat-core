@@ -1,20 +1,20 @@
 import { useChatStore } from "@/store/useChatStore";
 import { useAuthStore } from "@/store/useAuthStore";
-import SidebarSkeleton from "./skeletons/SidebarSkeleton.tsx"
+import SidebarSkeleton from "./skeletons/SidebarSkeleton.tsx";
 import { Users } from "lucide-react";
 import { useEffect } from "react";
 
 export default function Sidebar() {
-
-  const { users, getUsers, isUsersLoading, selectedUser, setSelectedUser } = useChatStore();
+  const { users, getUsers, isUsersLoading, selectedUser, setSelectedUser } =
+    useChatStore();
   const { onlineUsers } = useAuthStore();
-  const onlineIds = onlineUsers.map(u => u._id);
+  const onlineIds = onlineUsers.map((u) => u._id);
 
   useEffect(() => {
     getUsers();
-  }, [getUsers])
+  }, [getUsers]);
 
-  if (isUsersLoading) return <SidebarSkeleton/>
+  if (isUsersLoading) return <SidebarSkeleton />;
 
   return (
     <aside className="h-full w-20 lg:w-72 border-r border-base-300 flex flex-col transition-all duration-200">
@@ -44,18 +44,23 @@ export default function Sidebar() {
                 src={user.profilePicture}
                 alt={user.fullName}
                 className="size-12 object-cover rounded-full"
-                />
-                {onlineIds.includes(user._id) && (<span className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-zinc-900" />)}
+              />
+              {onlineIds.includes(user._id) && (
+                <span className="absolute bottom-0 right-0 size-3 bg-green-500 rounded-full ring-2 ring-zinc-900" />
+              )}
             </div>
             <div className="hidden lg:block text-left min-w-0">
-              <div className="font-medium text-white truncate">{user.fullName}</div>
+              <div className="font-medium text-white truncate">
+                {user.fullName}
+              </div>
             </div>
-
           </button>
         ))}
 
-        {users.length === 0 && (<div className="text-center text-black py-4">No online users</div>)}
+        {users.length === 0 && (
+          <div className="text-center text-black py-4">No online users</div>
+        )}
       </div>
     </aside>
   );
-};
+}
