@@ -38,7 +38,7 @@ export const useChatStore = create<ChatStoreStates & ChatStoreActions>((set, get
     isUsersLoading: false,
     isMessagesLoading: false,
 
-    setSelectedUser: (selectedUser: User | null) => set({selectedUser}),
+    setSelectedUser: (selectedUser: User | null) => set({selectedUser : selectedUser}),
 
     getUsers: async () => {
         
