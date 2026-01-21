@@ -132,7 +132,7 @@ export const useAuthStore = create<AuthStoreStates & AuthStoreActions>(
 			// io(..): function returns a socket object that points to the URL passed as argument
 			set({ socket: io(BACKEND_URL) });
 			// open http/WebSocket connection with the URL
-			get().socket?.connect();
+			// get().socket?.connect();
 		},
 		disconnectSocket: () => {
 			const { socket } = get();
