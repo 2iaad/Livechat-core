@@ -95,24 +95,3 @@ const useStore = create((set, get) => ({
 }))
 ```
 
-# Difference between:
-
-```
-function Controls() {
-
-    version 1: -> const increasePopulation = useBear((state) => state.increasePopulation)
-    version 2: -> const { increasePopulation } = useBear()
-    
-  return <button onClick={increasePopulation}>one up</button>
-}
-```
-
-- in version 1:
-    1. You are selecting exactly one value from the store
-    2. The component re-renders only if increasePopulation changes
-    
-- in version 2:
-    1. Subscribes the component to the entire store
-    2. The component re-renders on any store change
-
-

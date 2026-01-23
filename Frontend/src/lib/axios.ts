@@ -7,7 +7,7 @@ import axios from "axios";
  * @param baseURL sets the server URL prefix for all requests.
  * @param withCredentials ensures cookies (like your JWT) are sent.
  * 
- * axios client = JavaScript object with methods (get, post, etc.).
+ * axios client = JavaScript object with methods (get, post, etc.) that we use to send http request to the backend.
  */
 
 export const axiosInstance = axios.create({

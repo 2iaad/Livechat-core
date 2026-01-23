@@ -250,32 +250,3 @@ export const createMockStore = (initialState = {}) => {
    // ✅ Good - create stores at module level
    const useStore = create(() => ({ count: 0 }))
    ```
-
-3. **Don't overuse get() in actions**
-   ```typescript
-   // ❌ Bad
-   increment: () => {
-     const current = get().count
-     set({ count: current + 1 })
-   }
-   
-   // ✅ Good
-   increment: () => set(state => ({ count: state.count + 1 }))
-   ```
-
-## Integration with External Libraries
-
-### With React Query
-```typescript
-const useDataStore = create((set) => ({
-  selectedId: null,
-  setSelectedId: (id: string) => set({ selectedId: id })
-}))
-
-function DataComponent() {
-  const selectedId = useDataStore(state => state.selectedId)
-  const { data } = useQuery(['data', selectedId], () => fetchData(selectedId))
-  
-  return <div>{/* render data */}</div>
-}
-```

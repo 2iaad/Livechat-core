@@ -42,7 +42,8 @@ export default function MessageInput() {
       // Clear form
       setText("")
       setImagePreview(null)
-      if (fileInputRef.current) fileInputRef.current.value = "";
+      if (fileInputRef.current)
+          fileInputRef.current.value = "";
     } catch (error) {
       console.log("Failed to send message:", error)
     }
@@ -70,13 +71,14 @@ export default function MessageInput() {
       )}
 
       <form onSubmit={handleSendMessage} className="flex items-center gap-2">
+        {/* form */}
         <div className="flex-1 flex gap-2">
           {/* message input */}
           <input  type="text" placeholder="Type a message..." value={text} onChange={(e) => setText(e.target.value)}
                   className="bg-gray-800 text-white w-full input input-bordered rounded-lg input-sm sm:input-md" />
           {/* file input */}
           <input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleImageChange} />
-          {/* file button */}
+          {/* file input button */}
           <button type="button" onClick={() => fileInputRef.current?.click()}
                   className={`bg-gray-800 hidden sm:flex btn btn-circle ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`} >
             <Image size={20} />
