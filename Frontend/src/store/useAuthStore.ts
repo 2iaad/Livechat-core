@@ -139,8 +139,8 @@ export const useAuthStore = create<AuthStoreStates & AuthStoreActions>((set, get
 		set({ socket: socket });
 
 		// listen to the brodcast i make when i user is online from backend
-		socket.on("xxxGetOnlineUsers", (userId) => {
-			set({ onlineUsers: userId })
+		socket.on("xxxGetOnlineUsers", (usersIds) => {
+			set({ onlineUsers: usersIds })
 		})
 	},
 
