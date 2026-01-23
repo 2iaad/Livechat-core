@@ -47,7 +47,7 @@ const callBack = (socket: Socket) => {
 
 	// broadcast a certain event "getOnlineUsers", and a certain object "Object.keys(onlineUsers)"
 	socket.emit("xxxGetOnlineUsers", Object.keys(onlineUsers)); // Object.keys() -> to only send the keys
-	
+
 	socket.on('disconnect', () => {
 		console.log("User disconnected: ", socket.id)
 		// remove user from online users
