@@ -12,12 +12,14 @@ import { Toaster } from "react-hot-toast"
 
 export default function App() {
 
-	const { authUserObj, isCheckingAuth, checkAuth } = useAuthStore();
+	const { authUserObj, isCheckingAuth, checkAuth, onlineUsers } = useAuthStore();
 
+	console.log({onlineUsers})
+	
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth])
-
+	
 	if (isCheckingAuth && !authUserObj) // show spinner
 	{
 		return (
@@ -32,7 +34,7 @@ export default function App() {
 			{authUserObj && <Navbar />}
 			<Routes>
 				{/* If logged in, go to Home. If not, go to Login */}
-				<Route path="/" element={authUserObj ? <HomePage /> : <Navigate to="/login"/>} />
+				<Route path="/" element={authUserObj ? <HomePage /> : <Navigate to="/login" />} />
 				{/* If logged in, go to Home. If not, its ok */}
 				<Route path="/signup" element={authUserObj ? <Navigate to="/" /> : <SignUpPage />} />
 				<Route path="/login" element={authUserObj ? <Navigate to="/" /> : <LoginPage />} />

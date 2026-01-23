@@ -167,3 +167,15 @@ its use is to check if the client (is logged in) and (is a valide user) using th
     - render the the array returned.
 
 11. ### integrate WebSockets.
+
+    * #### setting up online users:
+
+        1. Frontend: create a socket for each logged in || signed up user using the `io()`
+        2. Frontend: connect with the [server socket](../Backend/src/lib/socket.ts) and send the current authenticated user id.
+        3. Backend: get the the current authenticated user id & add it to the onlineUsers array.
+        4. Backend: broadcast custum event `xxxGetOnlineUsers` with the array to all connected users using the `.emit()`.
+        > if an user is logged out - remove user from array + broadcast the updated array.
+        5. Frontend: get the updated onlineUsers array in `checkAuth()`.
+        6. Frontend: check if the each user is included in `onlineUsers` array.
+
+    * #### setting up online users:
