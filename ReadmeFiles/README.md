@@ -167,3 +167,5 @@ its use is to check if the client (is logged in) and (is a valide user) using th
     - render the the array returned.
 
 11. ### integrate WebSockets.
+
+// TODO: explain this part
