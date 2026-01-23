@@ -6,7 +6,6 @@ export default function ChatHeader() {
 
   const { selectedUser, setSelectedUser } = useChatStore();
   const { onlineUsers } = useAuthStore();
-  const onlineUsersID = onlineUsers.map(el => el._id)
   
   return (
     <div className="p-2.5 border-b border-base-300">
@@ -23,7 +22,7 @@ export default function ChatHeader() {
           <div>
             <h3 className="font-medium">{selectedUser?.fullName}</h3>
             <p className="text-sm text-base-content/70">
-              {onlineUsersID.includes(selectedUser?._id!) ? "Online" : "Offline"}
+              {onlineUsers.includes(selectedUser?._id!) ? "Online" : "Offline"}
             </p>
           </div>
         </div>
