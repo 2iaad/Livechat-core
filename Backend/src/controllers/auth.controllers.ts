@@ -43,9 +43,10 @@ export async function signup(req: Request, res: Response) {
         const jwToken = generateJWT(newUser._id, res);
 
         res.status(201).json({
-            message: "New user created!",
-            id: newUser._id,
-            fullName: newUser.fullName
+            _id: newUser._id,
+            fullName: newUser.fullName,
+            email: newUser.email,
+            profilePic: newUser.profilePicture,
         })
     }
     catch (error) {
@@ -70,9 +71,10 @@ export const login = async (req: Request, res: Response) => {
         generateJWT(user._id, res);
 
         res.status(200).json({
-            message: "User logged in!",
-            id: user._id,
-            fullName: user.fullName
+            _id: user._id,
+            fullName: user.fullName,
+            email: user.email,
+            profilePic: user.profilePicture,
         })
     }
     catch (error) {

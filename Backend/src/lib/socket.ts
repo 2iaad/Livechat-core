@@ -36,24 +36,25 @@ const onlineUsers: onlineUsers = {};
 // socket represents the socket we created on the client-side from the front-end.
 const callBack = (socket: Socket) => {
 	// printer
-	console.log(`URL: ${socket.request.url}\nTransport: ${socket.conn.transport.name}\nUser connected: ${socket.id}`);
-	socket.conn.on("upgrade", (transport) => {
-		console.log("Upgraded transport:", transport.name); // 'websocket'
-	});
+	console.log(`User connected: ${socket.id}\n`);
+	// console.log(`URL: ${socket.request.url}\nTransport: ${socket.conn.transport.name}\n`);
+	// socket.conn.on("upgrade", (transport) => {
+	// 	console.log("Upgraded transport:", transport.name, '\n'); // 'websocket'
+	// });
 
 	// get userId from front-end
 	const userId = socket.handshake.query?.userId as string;
 	onlineUsers[userId] = socket.id;
 
 	// broadcast a certain event "getOnlineUsers", and a certain object "Object.keys(onlineUsers)"
-	socket.emit("xxxGetOnlineUsers", Object.keys(onlineUsers)); // Object.keys() -> to only send the keys
+	io.emit("xxxGetOnlineUsers", Object.keys(onlineUsers)); // Object.keys() -> to only send the keys
 
 	socket.on('disconnect', () => {
 		console.log("User disconnected: ", socket.id)
 		// remove user from online users
 		delete onlineUsers[userId];
 		// let everyone know
-		socket.emit("getOnlineUsers", Object.keys(onlineUsers)); // Object.keys() -> to only send the keys
+		io.emit("xxxGetOnlineUsers", Object.keys(onlineUsers)); // Object.keys() -> to only send the keys
 	})
 }
 
