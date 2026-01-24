@@ -26,21 +26,20 @@ const io = new Server(server, {
 
 
 
-type socketId = string;
-type userId = string;
+type SocketId = string;
+type UserId = string;
 // Record is a built‑in TypeScript utility type that represents an object whose keys and values follow specific types.
-type onlineUsers = Record<userId, socketId>
-
+type onlineUsers = Record<UserId, SocketId>
 const onlineUsers: onlineUsers = {};
+
+export function getRecieverSocketId(userId: UserId): SocketId | undefined {
+	return onlineUsers[userId];
+}
 
 // socket represents the socket we created on the client-side from the front-end.
 const callBack = (socket: Socket) => {
 	// printer
 	console.log(`User connected: ${socket.id}\n`);
-	// console.log(`URL: ${socket.request.url}\nTransport: ${socket.conn.transport.name}\n`);
-	// socket.conn.on("upgrade", (transport) => {
-	// 	console.log("Upgraded transport:", transport.name, '\n'); // 'websocket'
-	// });
 
 	// get userId from front-end
 	const userId = socket.handshake.query?.userId as string;
