@@ -87,16 +87,18 @@ export const useChatStore = create<ChatStoreStates & ChatStoreActions>((set, get
 
         console.log("listenToMessages\n");
         const socket = useAuthStore.getState().socket;
-        
+
         socket?.off("xxxNewMessage");
         socket?.on("xxxNewMessage", (newMessage) => {
+            if (selectedUser._id != newMessage.senderId)
+                return;
             set({ messages: [...get().messages, newMessage] });
         })
     },
-    
+
     unlistenToMessages: () => {
         const socket = useAuthStore.getState().socket;
-        
+
         console.log("un-listenToMessages\n");
         socket?.off("xxxNewMessage");
     }
