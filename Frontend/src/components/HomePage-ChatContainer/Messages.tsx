@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+import { useRef } from "react";
 import { useChatStore } from "@/store/useChatStore";
 import MessagesSkeleton from "../skeletons/MessagesSkeleton";
 import { useAuthStore } from "@/store/useAuthStore";
@@ -16,13 +17,24 @@ export default function Messages() {
 	const listenToMessages = useChatStore((s) => s.listenToMessages);
 	const unlistenToMessages = useChatStore((s) => s.unlistenToMessages);
 
+	const messageEnd = useRef<HTMLDivElement>(null);
+
 	useEffect(() => {
 		if (selectedUser)
+		{
 			getMessages(selectedUser._id);
-		listenToMessages();
+			listenToMessages();
+		}
 
 		return () => unlistenToMessages();
 	}, [selectedUser?._id, getMessages, listenToMessages, unlistenToMessages])
+
+	useEffect(() => {
+		if (messageEnd.current && messages)
+			messageEnd.current?.scrollIntoView({
+				behavior: "smooth",
+			});
+	}, [messages])
 
 	if (isMessagesLoading) return (<MessagesSkeleton />)
 
@@ -30,6 +42,7 @@ export default function Messages() {
 		return (
 			<div
 				key={message._id}
+				ref={messageEnd}
 				className={`chat ${message.senderId === selectedUser?._id ? "chat-start" : "chat-end"}`}
 			>
 				<div className="chat-image avatar">
