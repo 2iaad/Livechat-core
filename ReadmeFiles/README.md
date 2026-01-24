@@ -178,4 +178,14 @@ its use is to check if the client (is logged in) and (is a valide user) using th
         5. Frontend: get the updated onlineUsers array in `checkAuth()`.
         6. Frontend: check if the each user is included in `onlineUsers` array.
 
-    * #### setting up online users:
+    * #### setting up live messages:
+    
+        1. Frontend: user clicking the [message input box](../Frontend/src/components/HomePage-ChatContainer/MessageInput.tsx) triggers the `sendMessage()` function.
+        2. Frontend: `sendMessage()` sends POST request to the Backend `/api/messages/send:otherUserId` along with the Message the user have submitted + update messages state variable to render the message on the screen.
+        3. Backend: match the url with the correct `/send/:id` route.
+        4. Backend: `sendMessage` controller is executed;
+            - get userId from req.body + otherUserId from url.
+            - save image to cloudinary to generate its url.
+            - save the message to the DataBase
+            - emit the message to the otherUserId using `io.to().emit`
+        5. other user Frontend: catches the event & update messages state array.

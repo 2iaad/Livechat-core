@@ -1,5 +1,5 @@
 import type { Request, Response } from "express";
-import User from '../models/user.model.ts'
+import User, { staticImage } from '../models/user.model.ts'
 import bcrypt from "bcryptjs" // importing element from package downloaded
 import type { RequestHandler } from "express";
 
@@ -33,7 +33,8 @@ export async function signup(req: Request, res: Response) {
         const newUser = new User({
             fullName: fullName,
             email,
-            password: hashedPassword
+            password: hashedPassword,
+            profilePic: staticImage
         })
 
         // save newUser inside the DB
