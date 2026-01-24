@@ -2,6 +2,7 @@ import type { RequestHandler } from "express"
 import User from "../models/user.model.ts"
 import Message from "../models/message.model.ts"
 import cloudinary from "../lib/cloudinary.ts";
+import { getRecieverSocketId, io } from "../lib/socket.ts";
 
 export const getUsersForSideBar: RequestHandler = async (req, res) => {
 
@@ -69,10 +70,13 @@ export const sendMessage: RequestHandler = async (req, res) => {
 
         await newMessage.save();
 
-        // TODO: realtime functionality goes here using socket.io
+        const recieverSocketId: string | undefined = getRecieverSocketId(recieverId);
+        if (recieverSocketId) {
+            io.to(recieverSocketId).emit("xxxNewMessage", newMessage);
+        }
         res.status(201).json(newMessage)
     } catch (error) {
         console.log("Error in sendMessage controller: ", (error as Error).message)
-        res.status(500).json({error: "Internal Server Error"})
+        res.status(500).json({ error: "Internal Server Error" })
     }
 }

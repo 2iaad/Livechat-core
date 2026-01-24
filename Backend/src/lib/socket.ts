@@ -26,34 +26,34 @@ const io = new Server(server, {
 
 
 
-type socketId = string;
-type userId = string;
+type SocketId = string;
+type UserId = string;
 // Record is a built‑in TypeScript utility type that represents an object whose keys and values follow specific types.
-type onlineUsers = Record<userId, socketId>
-
+type onlineUsers = Record<UserId, SocketId>
 const onlineUsers: onlineUsers = {};
+
+export function getRecieverSocketId(userId: UserId): SocketId | undefined {
+	return onlineUsers[userId];
+}
 
 // socket represents the socket we created on the client-side from the front-end.
 const callBack = (socket: Socket) => {
 	// printer
-	console.log(`URL: ${socket.request.url}\nTransport: ${socket.conn.transport.name}\nUser connected: ${socket.id}`);
-	socket.conn.on("upgrade", (transport) => {
-		console.log("Upgraded transport:", transport.name); // 'websocket'
-	});
+	console.log(`User connected: ${socket.id}\n`);
 
 	// get userId from front-end
 	const userId = socket.handshake.query?.userId as string;
 	onlineUsers[userId] = socket.id;
 
 	// broadcast a certain event "getOnlineUsers", and a certain object "Object.keys(onlineUsers)"
-	socket.emit("xxxGetOnlineUsers", Object.keys(onlineUsers)); // Object.keys() -> to only send the keys
+	io.emit("xxxGetOnlineUsers", Object.keys(onlineUsers)); // Object.keys() -> to only send the keys
 
 	socket.on('disconnect', () => {
 		console.log("User disconnected: ", socket.id)
 		// remove user from online users
 		delete onlineUsers[userId];
 		// let everyone know
-		socket.emit("getOnlineUsers", Object.keys(onlineUsers)); // Object.keys() -> to only send the keys
+		io.emit("xxxGetOnlineUsers", Object.keys(onlineUsers)); // Object.keys() -> to only send the keys
 	})
 }
 
