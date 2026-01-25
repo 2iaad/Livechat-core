@@ -5,7 +5,7 @@ import NoChatSelected from "./HomePage-NoChatSelected.tsx";
 import ChatContainer from "./HomePage-ChatContainer.tsx";
 
 export default function HomePage() {
-	const { selectedUser } = useChatStore();
+	const selectedUser = useChatStore(state => state.selectedUser);
 
 	return (
 		<div className="h-screen bg-gray-800">

@@ -13,15 +13,13 @@ export default function Messages() {
 	const messages = useChatStore((s) => s.messages);
 	const getMessages = useChatStore((s) => s.getMessages);
 	const selectedUser = useChatStore((s) => s.selectedUser);
-
 	const listenToMessages = useChatStore((s) => s.listenToMessages);
 	const unlistenToMessages = useChatStore((s) => s.unlistenToMessages);
 
 	const messageEnd = useRef<HTMLDivElement>(null);
 
 	useEffect(() => {
-		if (selectedUser)
-		{
+		if (selectedUser) {
 			getMessages(selectedUser._id);
 			listenToMessages();
 		}

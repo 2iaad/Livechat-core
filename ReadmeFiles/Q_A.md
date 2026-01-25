@@ -1,3 +1,8 @@
+## Whats the difference between nodemon and node ? 
+
+node runs your app once.
+nodemon runs your app and automatically restarts it when files change.
+
 ## Error i encountered: (Coss-origin)
 
 This error happens because your Frontend (running on port 5173) and your Backend (running on port 5001) are on different "origins" (domains/ports). Browsers block these requests by default for security unless the backend explicitly allows them.

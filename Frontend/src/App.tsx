@@ -12,14 +12,14 @@ import { Toaster } from "react-hot-toast"
 
 export default function App() {
 
-	const { authUserObj, isCheckingAuth, checkAuth, onlineUsers } = useAuthStore();
+	const authUserObj = useAuthStore(state => state.authUserObj);
+	const isCheckingAuth = useAuthStore(state => state.isCheckingAuth);
+	const checkAuth = useAuthStore(state => state.checkAuth);
 
-	console.log({onlineUsers})
-	
 	useEffect(() => {
 		checkAuth();
 	}, [checkAuth])
-	
+
 	if (isCheckingAuth && !authUserObj) // show spinner
 	{
 		return (
