@@ -2,6 +2,8 @@ import toast from "react-hot-toast";
 import { X, Send, Image } from "lucide-react";
 import React, { useRef, useState } from "react";
 import { useChatStore } from "@/store/useChatStore";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 
 export default function MessageInput() {
 
@@ -50,45 +52,50 @@ export default function MessageInput() {
 	}
 
 	return (
-		<div className="p-4 w-full">
-			{/* show image selected */}
+		<div className="w-full border-t border-white/10 bg-slate-900/85 p-4">
 			{imagePreview && (
-				<div className="mb-3 flex items-center gap-2">
+				<div className="mb-3 flex items-center gap-2 rounded-xl border border-white/10 bg-slate-950/60 p-2">
 					<div className="relative">
 						<img src={imagePreview} alt="Preview"
-							className="w-20 h-20 object-cover rounded-lg border border-zinc-700"
+							className="h-20 w-20 rounded-lg border border-slate-700 object-cover"
 						/>
-						<button
+						<Button
 							onClick={removeImage}
-							className="absolute -top-1.5 -right-1.5 w-5 h-5 rounded-full bg-base-300
-              flex items-center justify-center"
+							className="absolute -right-1.5 -top-1.5 h-5 w-5 rounded-full"
+							variant="destructive"
+							size="icon-sm"
 							type="button"
 						>
 							<X className="size-3" />
-						</button>
+						</Button>
 					</div>
 				</div>
 			)}
 
 			<form onSubmit={handleSendMessage} className="flex items-center gap-2">
-				{/* form */}
 				<div className="flex-1 flex gap-2">
-					{/* message input */}
-					<input type="text" placeholder="Type a message..." value={text} onChange={(e) => setText(e.target.value)}
-						className="bg-gray-800 text-white w-full input input-bordered rounded-lg input-sm sm:input-md" />
-					{/* file input */}
+					<Input
+						type="text"
+						placeholder="Type a message..."
+						value={text}
+						onChange={(e) => setText(e.target.value)}
+						className="h-10 border-white/10 bg-slate-800 text-slate-100 placeholder:text-slate-400"
+					/>
 					<input type="file" accept="image/*" className="hidden" ref={fileInputRef} onChange={handleImageChange} />
-					{/* file input button */}
-					<button type="button" onClick={() => fileInputRef.current?.click()}
-						className={`bg-gray-800 hidden sm:flex btn btn-circle ${imagePreview ? "text-emerald-500" : "text-zinc-400"}`} >
+					<Button
+						type="button"
+						onClick={() => fileInputRef.current?.click()}
+						className="hidden border border-white/15 bg-slate-800 text-slate-300 hover:bg-slate-700 sm:flex"
+						variant="outline"
+						size="icon"
+					>
 						<Image size={20} />
-					</button>
+					</Button>
 				</div>
 
-				{/* send button */}
-				<button type="submit" className="btn btn-circle" disabled={!text.trim() && !imagePreview} >
+				<Button type="submit" size="icon" disabled={!text.trim() && !imagePreview}>
 					<Send size={20} className="mr-0.5" />
-				</button>
+				</Button>
 			</form>
 		</div>
 	);

@@ -1,6 +1,9 @@
 import { useState } from "react";
 import { useAuthStore } from "../store/useAuthStore";
 import { Camera, Mail, User } from "lucide-react";
+import UserAvatar from "@/components/shared/UserAvatar";
+import ProfileInfoField from "@/components/shared/ProfileInfoField";
+import { Button } from "@/components/ui/button";
 
 export default function ProfilePage() {
 	const { authUserObj, isUpdatingProfile, updateProfile } = useAuthStore();
@@ -23,33 +26,33 @@ export default function ProfilePage() {
 	};
 
 	return (
-		<div className="h-screen pt-20 bg-gray-800">
-			<div className="max-w-2xl mx-auto p-4 py-8">
-				<div className="bg-gray-100 rounded-xl p-6 space-y-8">
-					{/* header section*/}
+		<div className="relative min-h-screen bg-slate-950 pt-24">
+			<div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_20%,rgba(125,211,252,0.2),transparent_40%),radial-gradient(circle_at_80%_10%,rgba(248,113,113,0.22),transparent_30%)]" />
+			<div className="relative mx-auto max-w-2xl p-4 pb-8">
+				<div className="space-y-8 rounded-3xl border border-white/10 bg-white p-6 shadow-2xl sm:p-8">
 					<div className="text-center">
-						<h1 className="text-2xl font-semibold ">Profile</h1>
-						<p className="mt-2">Your profile information</p>
+						<h1 className="text-3xl font-semibold text-slate-900">Profile</h1>
+						<p className="mt-2 text-slate-600">Your profile information</p>
 					</div>
 
-					{/* avatar upload section */}
 					<div className="flex flex-col items-center gap-4">
 						<div className="relative">
-							<img
+							<UserAvatar
 								src={selectedImg || authUserObj?.profilePicture}
-								className="size-32 rounded-full object-cover border-4 "
+								alt={authUserObj?.fullName || "Profile"}
+								size="lg"
+								className="[&_img]:border-4 [&_img]:border-slate-200 [&_img]:size-32"
 							/>
-							<label
-								htmlFor="avatar-upload"
-								className={`
-                                                            absolute bottom-0 right-0 
-                                                            bg-base-content hover:scale-105
-                                                            p-2 rounded-full cursor-pointer 
-                                                            transition-all duration-200
-                                                            ${isUpdatingProfile ? "animate-pulse pointer-events-none" : ""}
-                                                        `}
-							>
-								<Camera className="w-5 h-5 text-base-200" />
+							<label htmlFor="avatar-upload" className="absolute bottom-0 right-0">
+								<Button
+									asChild
+									size="icon"
+									className={isUpdatingProfile ? "pointer-events-none animate-pulse" : ""}
+								>
+									<span>
+										<Camera className="h-5 w-5" />
+									</span>
+								</Button>
 								<input
 									type="file"
 									id="avatar-upload"
@@ -61,51 +64,34 @@ export default function ProfilePage() {
 							</label>
 						</div>
 
-						<p className="text-sm text-zinc-400">
-							{isUpdatingProfile
-								? "Uploading..."
-								: "Click the camera icon to update your photo"}
+						<p className="text-sm text-slate-500">
+							{isUpdatingProfile ? "Uploading..." : "Click the camera icon to update your photo"}
 						</p>
 					</div>
 
-					{/* user infos section */}
 					<div className="space-y-6">
-						<div className="space-y-1.5">
-							<div className="text-sm text-zinc-400 flex items-center gap-2">
-								<User className="w-4 h-4" />
-								Full Name
-							</div>
-							<p className="px-4 py-2.5 bg-gray-300 rounded-lg border-2 border-red-200">
-								{authUserObj?.fullName}
-							</p>
-						</div>
-
-						<div className="space-y-1.5">
-							<div className="text-sm text-zinc-400 flex items-center gap-2">
-								<Mail className="w-4 h-4" />
-								Email Address
-							</div>
-							<p className="px-4 py-2.5 bg-gray-300 rounded-lg border-2 border-red-200">
-								{authUserObj?.email}
-							</p>
-						</div>
+						<ProfileInfoField
+							icon={<User className="h-4 w-4" />}
+							label="Full Name"
+							value={authUserObj?.fullName || ""}
+						/>
+						<ProfileInfoField
+							icon={<Mail className="h-4 w-4" />}
+							label="Email Address"
+							value={authUserObj?.email || ""}
+						/>
 					</div>
 
-					{/* account infos section */}
-					<div className="mt-6 bg-gray-300 rounded-xl p-6 border-2 border-red-200">
-						<h2 className="text-lg font-medium  mb-4">
-							Account Information
-						</h2>
-						<div className="space-y-3 text-sm">
-							<div className="flex items-center justify-between py-2 border-b border-zinc-700">
+					<div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+						<h2 className="mb-4 text-lg font-medium text-slate-900">Account Information</h2>
+						<div className="space-y-3 text-sm text-slate-700">
+							<div className="flex items-center justify-between border-b border-slate-200 py-2">
 								<span>Member Since</span>
-								<span>
-									{authUserObj?.createdAt?.split("T")[0]}
-								</span>
+								<span>{authUserObj?.createdAt?.split("T")[0]}</span>
 							</div>
 							<div className="flex items-center justify-between py-2">
 								<span>Account Status</span>
-								<span className="text-red-500">Active</span>
+								<span className="font-medium text-emerald-600">Active</span>
 							</div>
 						</div>
 					</div>

@@ -1,5 +1,7 @@
 import { useAuthStore } from "@/store/useAuthStore";
 import { Link } from "react-router-dom";
+import UserAvatar from "@/components/shared/UserAvatar";
+import { Button } from "@/components/ui/button";
 
 export default function Navbar() {
 	const { authUserObj, logout } = useAuthStore();
@@ -10,24 +12,25 @@ export default function Navbar() {
 	}
 
 	return (
-		<header className="fixed shadow-md inset-x-0 top-0 z-30 mx-auto max-w-130 bg-gray-100 py-2 backdrop-blur-lg md:top-6 md:rounded-4xl">
-			<div className="px-4 flex justify-between items-center">
-				<div className="flex items-center">
-					<img className="rounded-full size-10 m-0 p-0" src={authUserObj?.profilePicture} />
-					<Link
-						to="/profile"
-						className="inline-block rounded-4xl px-3 py-2 text-sm font-medium text-gray-900 transition-all duration-200 hover:bg-gray-100 hover:text-gray-900"
-					>
-						{authUserObj?.fullName}'s Profile
-					</Link>
-				</div>
-				<Link
-					className="inline-block rounded-4xl px-3 py-2 text-sm bg-red-400 shadow-lg font-bold text-white transition-all duration-200 hover:bg-red-600"
-					onClick={handleLogout}
-					to="/login"
-				>
-					Logout
+		<header className="fixed inset-x-4 top-4 z-30 mx-auto w-auto max-w-5xl rounded-2xl border border-white/20 bg-white/90 py-2 shadow-lg backdrop-blur md:top-6">
+			<div className="flex items-center justify-between px-3 sm:px-5">
+				<Link to="/profile" className="group flex items-center gap-3 rounded-xl p-1.5 transition-colors hover:bg-slate-100">
+					<UserAvatar
+						src={authUserObj?.profilePicture}
+						alt={authUserObj?.fullName || "Profile"}
+						size="sm"
+					/>
+					<div className="hidden sm:block">
+						<p className="text-sm font-semibold text-slate-900">{authUserObj?.fullName}</p>
+						<p className="text-xs text-slate-500 group-hover:text-slate-700">View profile</p>
+					</div>
 				</Link>
+
+				<Button asChild variant="destructive" size="sm">
+					<Link onClick={handleLogout} to="/login">
+						Logout
+					</Link>
+				</Button>
 			</div>
 		</header>
 	);
